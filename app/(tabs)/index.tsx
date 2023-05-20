@@ -9,7 +9,7 @@ export default function TabOneScreen() {
       <FlatList 
       data={tweets}
        renderItem={({item})=> <Tweet tweet={item}/>}
-      />
+           />
          </View >
   );
 }
