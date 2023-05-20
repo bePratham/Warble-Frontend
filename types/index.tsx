@@ -1,7 +1,7 @@
 export type User = {
     id:string;
     name:string;
-    usernames:string;
+    username:string;
     image?:string;
     }
    export type TweetType={
