@@ -19,8 +19,8 @@ type TweetProps = {
 }
 const Tweet=({ tweet }:TweetProps)=>{
     return (
-        <View style={styles.container}>
-        <Image src={tweet.user.image} style={styles.userImage}  />
+        <View style = {styles.container}>
+        <Image src = {tweet.user.image} style={styles.userImage}  />
        
         <View style={styles.mainContainer}> 
            <View style={{flexDirection:'row'}}>
@@ -34,12 +34,12 @@ const Tweet=({ tweet }:TweetProps)=>{
           </View>
           <Text style={styles.content}>{tweet.content}</Text>
 
-          {tweet.image && <Image src={tweet.image} style={styles.Image}/>}
+          {tweet.image && <Image src ={tweet.image} style={styles.Image}/>}
             <View style={styles.footer}>
               <IconButton icon="comment" text={tweet.numberOfComments}/>
-              <IconButton icon="retweet " text={tweet.numberOfRetweets}/>
+              <IconButton icon="retweet" text={tweet.numberOfRetweets}/>
               <IconButton icon="heart" text={tweet.numberOfLikes}/>
-              <IconButton icon="chart" text={tweet.impressions}/>
+              <IconButton icon="chart" text={tweet.impressions || 0}/>
               <IconButton icon="share-apple" />
             </View>
 
