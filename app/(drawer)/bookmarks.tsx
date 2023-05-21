@@ -7,3 +7,4 @@ const Bookmarks=()=>{
         </View>
     )
 }
+export default Bookmarks;
