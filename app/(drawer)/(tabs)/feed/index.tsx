@@ -4,8 +4,29 @@ import Tweet from '../../../../components/Tweet';
 import tweets from '../../../../assets/assets/data/tweets';
 import { Entypo } from '@expo/vector-icons';
 import {Link} from 'expo-router';
+import { useEffect, useState } from 'react';
 
 export default function TabOneScreen() {
+  const [tweet,setTweet]=useState([]);
+  useEffect(()=>{
+    const fetchTweets=async()=>{
+      const url="http://localhosth:3000/tweet";
+      const authToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoyOX0.CaseFX_wSBrSZJCDmMk7QDsfZAf38oNi35-k2R6UTqo';
+      const res=await fetch(url,{
+          headers:{
+              Autherization:`Bearer ${authToken}`
+        }
+      }
+    );
+        if(res.status!==200){
+          console.log("Error in fetching the api");
+        }
+        const data= await res.json();
+        console.log(data);
+        setTweet(data);
+    };
+    fetchTweets();
+  },[]);
   return (
     <View style={styles.page}>
       <FlatList 
