@@ -1,36 +1,32 @@
-import { StyleSheet,Image,FlatList, Pressable } from 'react-native';
+import { StyleSheet,
+        Image,
+        FlatList,
+         Pressable,
+         } from 'react-native';
 import { Text, View } from '../../../../components/Themed';
 import Tweet from '../../../../components/Tweet';
-import tweets from '../../../../assets/assets/data/tweets';
 import { Entypo } from '@expo/vector-icons';
 import {Link} from 'expo-router';
-import { useEffect, useState } from 'react';
-
-export default function TabOneScreen() {
-  const [tweet,setTweet]=useState([]);
-  useEffect(()=>{
-    const fetchTweets=async()=>{
-      const url="http://localhosth:3000/tweet";
-      const authToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoyOX0.CaseFX_wSBrSZJCDmMk7QDsfZAf38oNi35-k2R6UTqo';
-      const res=await fetch(url,{
-          headers:{
-              Autherization:`Bearer ${authToken}`
-        }
-      }
-    );
-        if(res.status!==200){
-          console.log("Error in fetching the api");
-        }
-        const data= await res.json();
-        console.log(data);
-        setTweet(data);
-    };
-    fetchTweets();
-  },[]);
+// import { useEffect, useState } from 'react';
+import  {listTweets}  from '../../../../lib/api/tweets';
+import { useQuery } from '@tanstack/react-query';
+import { ActivityIndicator } from 'react-native';
+export default function FeedScreen() {
+  const { data, isLoading, error }=useQuery({
+    queryKey:['tweets'],
+    queryFn:listTweets,
+  });
+  if(isLoading){
+    return <ActivityIndicator/>;
+  }
+  if(error){
+    //@ts-ignore
+    return <Text>{error.message} </Text>
+  }
   return (
-    <View style={styles.page}>
+    <View style={styles.page}> 
       <FlatList 
-      data={tweets}
+      data={data}
        renderItem={({item})=> <Tweet tweet={item}/>}
       />
               <Link href="/new-tweet" asChild>
