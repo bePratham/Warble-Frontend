@@ -37,12 +37,13 @@ export const listTweets=async()=>{
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-        body:JSON.stringify(data),
+        body: JSON.stringify(data),
       });
        if(res.status === 401){
           throw new Error('Not authorized .Please Sign in');
         }
         if(res.status!==200){
+          console.log(res);
           throw new Error("Error creating tweet");
         }
        
