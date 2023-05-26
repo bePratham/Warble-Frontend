@@ -11,7 +11,7 @@ const Tweet=({ tweet }:TweetProps)=>{
     return (
       <Link href={`/feed/tweet/${tweet.id}`} asChild>
         <Pressable style={styles.container}>
-        <Image src={tweet.user.image} style={styles.userImage}  />
+        <Image src = {tweet.user.image} style={styles.userImage}  />
        
         <View style={styles.mainContainer}> 
            <View style={{flexDirection:'row'}}>

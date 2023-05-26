@@ -18,24 +18,28 @@ export default function NewTweet(){
     const[text,setText] = useState("");
     const router = useRouter();
 
-    const QueryClient=useQueryClient();
+    const queryClient=useQueryClient();
 
-    const {mutate,isLoading,isError,error }=useMutation({
+    const {mutateAsync,isLoading,isError,error }=useMutation({
         mutationFn: createTweet,
         onSuccess:(data)=>{
-            QueryClient.setQueriesData({ queryKey:['tweets']},(existingTweets)=>[
-                data,
-                ...existingTweets,
-            ]);
-        },
+         queryClient.setQueriesData(['tweets'],(existingTweets)=>{
+            console.log("data",data);
+            console.log("existing",existingTweets);
+            return[data,...existingTweets];
+        })
+        }
     });
-    const onTweetPress = async()=>{
+    const onTweetPress = async ()=>{
         console.warn("posting that tweet",text);
+       try{
+        await  mutateAsync({content:text});
+        setText('');
+        router.back();
        
-        mutate({content:text});
-        // setText('');
-        // router.back();
-       
+       }catch(e){
+        console.log("Error",e);
+       }   
     }
     return(
 <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
