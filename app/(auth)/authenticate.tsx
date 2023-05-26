@@ -1,8 +1,9 @@
-import { View, Text, Pressable,StyleSheet } from 'react-native'
+import { View, Text, Pressable,StyleSheet ,Alert} from 'react-native'
 import React from 'react'
 import { TextInput } from 'react-native'
 import { useState } from 'react';
 import { useSearchParams } from 'expo-router';
+import { authenticate } from '../../lib/api/auth';
 
 const Autheticate = () => {
 
@@ -11,7 +12,15 @@ const Autheticate = () => {
     const{email} = useSearchParams();
     
     const onConfirm = async()=>{
-        console.warn('Autheticate: ',email,code);
+        if(typeof email!== 'string'){
+            return;
+        }
+       try{
+        const res = await authenticate({email,emailToken:code})
+        console.log(res);
+       }catch(e){
+        Alert.alert("Error","Emailcode dosent match")
+       }
     }
 
     return (
