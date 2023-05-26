@@ -1,16 +1,16 @@
-import { View,StyleSheet,Text,Image,
-         TextInput, Pressable, ActivityIndicator } from "react-native";
+import { View,StyleSheet,Text,Image,TextInput, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useNavigation, useRouter } from "expo-router";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTweet } from "../lib/api/tweets";
+
+
 const user = {
     id: 'u1',
     username: 'VadimNotJustDev',
     name: 'Vadim',
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png',
+    image:'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png',
   }
 
 export default function NewTweet(){
@@ -20,23 +20,22 @@ export default function NewTweet(){
 
     const QueryClient=useQueryClient();
 
-    const {mutateAsync,isLoading,isError,error }=useMutation({
+    const {mutate,isLoading,isError,error }=useMutation({
         mutationFn: createTweet,
-        onSuccess:()=>{
-            QueryClient.invalidateQueries({ queryKey:['tweets']})
-        }
-    })
+        onSuccess:(data)=>{
+            QueryClient.setQueriesData({ queryKey:['tweets']},(existingTweets)=>[
+                data,
+                ...existingTweets,
+            ]);
+        },
+    });
     const onTweetPress = async()=>{
         console.warn("posting that tweet",text);
-        try{
-            await mutateAsync({content:text});
-        setText('');
-        router.back();
-        }
-       catch(e){
-        // @ts-ignore
-        console.log("Error : ",e.message);
-       }
+       
+        mutate({content:text});
+        // setText('');
+        // router.back();
+       
     }
     return(
 <SafeAreaView style={{flex:1,backgroundColor:'white'}}>

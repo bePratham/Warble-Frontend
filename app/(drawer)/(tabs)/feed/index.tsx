@@ -1,34 +1,47 @@
-import { StyleSheet,
-        Image,
-        FlatList,
-         Pressable,
-         } from 'react-native';
-import { Text, View } from '../../../../components/Themed';
+import { StyleSheet,FlatList} from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { View } from '../../../../components/Themed';
 import Tweet from '../../../../components/Tweet';
 import { Entypo } from '@expo/vector-icons';
 import {Link} from 'expo-router';
-// import { useEffect, useState } from 'react';
-import  {listTweets}  from '../../../../lib/api/tweets';
+import { useEffect,useState } from 'react';
+import { listTweets } from '../../../../lib/api/tweets';
 import { useQuery } from '@tanstack/react-query';
-import { ActivityIndicator } from 'react-native';
+
+
+
 export default function FeedScreen() {
-  const { data, isLoading, error }=useQuery({
+
+  const {data,isLoading,error} = useQuery({
     queryKey:['tweets'],
     queryFn:listTweets,
-  }); 
-  if(isLoading){
-    return <ActivityIndicator/>;
-  }
-  if(error){
-    //@ts-ignore
-    return <Text>{error.message} </Text>
-  }
+  })
+ 
+//   const[tweets,setTweets] = useState([]);
+// // fetch tweets:http://localhost:3000/tweet
+//   useEffect(()=>{
+//     const fetchTweets = async () =>{
+//      const res = await listTweets();
+//      setTweets(res);
+//     }
+
+//     fetchTweets();
+//   },[]);
+
+if(isLoading){
+  return <ActivityIndicator />;
+}
+if(error){
+  return <Text>{error.message}</Text>
+}
+
+
   return (
     <View style={styles.page}> 
       <FlatList 
-      data={data}
-       renderItem={({item})=> <Tweet tweet={item}/>}
-      />
+      data={data} 
+      renderItem={({item})=> <Tweet tweet={item}/>
+      }/>
               <Link href="/new-tweet" asChild>
                 <Entypo 
                 name="plus" 
