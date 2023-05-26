@@ -12,7 +12,7 @@ const Autheticate = () => {
     const{email} = useSearchParams();
     
     const onConfirm = async()=>{
-        if(typeof email!== 'string'){
+        if(typeof email!== 'string' ){
             return;
         }
        try{
