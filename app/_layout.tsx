@@ -9,7 +9,10 @@ export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
+
 const client=new QueryClient();
+
+
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(drawer)',
@@ -50,6 +53,9 @@ function RootLayoutNav() {
           <Stack.Screen 
           name ="new-tweet" 
           options={{title:'New Tweet',headerShown:false}}/>
+         
+         <Stack.Screen name ="(auth)/signIn" options={{headerShown:false}}/> 
+         <Stack.Screen name ="(auth)/authenticate" options={{title:"Confirm"}}/>
         </Stack>
       </ThemeProvider>
       </QueryClientProvider>
