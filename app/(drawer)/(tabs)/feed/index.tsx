@@ -15,7 +15,7 @@ export default function FeedScreen() {
   const { data, isLoading, error }=useQuery({
     queryKey:['tweets'],
     queryFn:listTweets,
-  });
+  }); 
   if(isLoading){
     return <ActivityIndicator/>;
   }
