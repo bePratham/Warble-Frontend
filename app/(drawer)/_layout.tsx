@@ -3,6 +3,8 @@ import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from "
 const DrawerNavigator= createDrawerNavigator().Navigator;
 const Drawer=withLayoutContext(DrawerNavigator); 
 import { Text } from "react-native";
+import { useAuth } from "../../context/AuthContext";
+import { ActivityIndicator } from "react-native";
 export const unstable_settings = {
     initialRouteName: '(tabs)',
   };
@@ -15,6 +17,10 @@ export const unstable_settings = {
     )
   }
 export default function DrawerLayout(){
+  const {authToken}=useAuth();
+  if(!authToken){
+    return <ActivityIndicator />
+  }
     return <Drawer drawerContent={(props)=><CustomDrawerContent{...props}/>}>
         <Drawer.Screen name='(tabs)' options={{ headerShown:false ,title :'Home'}} />
         <Drawer.Screen name='bookmarks' options={{title :'Bookmarks'}} />
