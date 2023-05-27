@@ -10,7 +10,8 @@ const Autheticate = () => {
 
     const[code,setCode] = useState('');
     const{email} = useSearchParams();
-    const {setAuthToken}=useAuth();  
+    //@ts-ignore
+    const {updateAuthToken}=useAuth();  
     const onConfirm = async()=>{
         if(typeof email!== 'string' ){
             return;
@@ -18,7 +19,7 @@ const Autheticate = () => {
        try{
         const res = await authenticate({email,emailToken:code})
         // console.log(res);
-        setAuthToken(res.authToken);
+      await  updateAuthToken(res.authToken);
        }catch(e){
         Alert.alert("Error","Emailcode dosent match")
        }
