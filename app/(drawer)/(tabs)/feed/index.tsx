@@ -1,4 +1,4 @@
-import { StyleSheet,FlatList} from 'react-native';
+import { StyleSheet,FlatList,Text} from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { View } from '../../../../components/Themed';
 import Tweet from '../../../../components/Tweet';
@@ -7,8 +7,6 @@ import {Link} from 'expo-router';
 import { useEffect,useState } from 'react';
 import { listTweets } from '../../../../lib/api/tweets';
 import { useQuery } from '@tanstack/react-query';
-
-
 
 export default function FeedScreen() {
 

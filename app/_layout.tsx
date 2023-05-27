@@ -9,7 +9,7 @@ export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
-
+import  AuthContextProvider  from '../context/AuthContext';
 const client=new QueryClient();
 
 
@@ -42,7 +42,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <>
+    <AuthContextProvider>
     <QueryClientProvider client={client}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
@@ -59,6 +59,6 @@ function RootLayoutNav() {
         </Stack>
       </ThemeProvider>
       </QueryClientProvider>
-    </>
+    </AuthContextProvider>
   );
 }

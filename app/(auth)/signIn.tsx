@@ -6,18 +6,16 @@ import { useRouter } from 'expo-router';
 import { login } from '../../lib/api/auth';
 
 const SignIn = () => {
-
     const[email,setEmail] = useState('');
-    const router = useRouter();
-
-   
+    const router = useRouter();   
     
     const onSignIn = async()=>{
-        console.warn('Sign in',email);
+        // console.warn('Sign in',email);
         try{
           await login({email});
           router.push({pathname:'/authenticate',params:{email}});
         }catch(e){
+          //@ts-ignore 
           Alert.alert('Error',e.message);
         }  
     }

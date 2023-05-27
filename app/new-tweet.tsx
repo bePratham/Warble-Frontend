@@ -23,9 +23,9 @@ export default function NewTweet(){
     const {mutateAsync,isLoading,isError,error }=useMutation({
         mutationFn: createTweet,
         onSuccess:(data)=>{
+            //@ts-ignore
          queryClient.setQueriesData(['tweets'],(existingTweets)=>{
-            console.log("data",data);
-            console.log("existing",existingTweets);
+            //@ts-ignore
             return[data,...existingTweets];
         })
         }

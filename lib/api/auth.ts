@@ -29,6 +29,5 @@ export const authenticate =async (data:{
     if(res.status!== 200){
         throw new Error("Error during the login process");
     }
-
-    return res.json()
+    return res.json();
 };
