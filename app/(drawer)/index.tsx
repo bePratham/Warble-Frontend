@@ -4,7 +4,7 @@ import React from 'react';
 const Index = ()=>{
     return (
         <View>
-             <Text> Index  </Text>
+             <Text> Index </Text>
         </View>
     )
 }
