@@ -9,8 +9,8 @@ export default function TweetScreen(){
 
 
     const{id} = useSearchParams();
-    const { getTweet}  =useTweetsApi(); 
-    const { data , isLoading , error }=useQuery({
+    const { getTweet}  = useTweetsApi(); 
+    const { data , isLoading , error } = useQuery({
         queryKey: ['tweet',id],
         queryFn: ()=> getTweet(id as string),
 
