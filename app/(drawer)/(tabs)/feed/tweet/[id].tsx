@@ -4,6 +4,7 @@ import tweets from "../../../../../assets/assets/data/tweets";
 import { useSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { useTweetsApi } from "../../../../../lib/api/tweets";
+import UserProfileHeader from "../../../../../components/userProfile";
 
 export default function TweetScreen(){
 
@@ -22,6 +23,6 @@ export default function TweetScreen(){
         return <Text> Tweet {id} not found</Text>
     }
    
-    return <Tweet tweet={data} />
+    return <UserProfileHeader tweet={data} />
 };
 

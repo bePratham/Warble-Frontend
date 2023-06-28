@@ -6,12 +6,12 @@ const tweets = [
       username: 'VadimNotJustDev',
       name: 'Vadim',
       image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png',
+        'https://hips.hearstapps.com/hmg-prod/images/dwayne-the-rock-johnson-gettyimages-1061959920.jpg',
     },
     createdAt: '2020-08-27T12:00:00.000Z',
     content: 'Can you please check if the Subscribe button on Youtube works?',
     image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/thumbnail.png',
+      'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/02/12/957100-tr.jpeg',
     numberOfComments: 123,
     numberOfRetweets: 11,
     numberOfLikes: 10,
