@@ -4,15 +4,19 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-
-export {
+import TweetsApiContexProvider from '../lib/api/tweets';
+import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
+export { 
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
+import  AuthContextProvider  from '../context/AuthContext';
+const client=new QueryClient();
+
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(drawer)',
 };
 
 export default function RootLayout() {
@@ -39,17 +43,25 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <>
+    <AuthContextProvider >
+      <TweetsApiContexProvider>
+    <QueryClientProvider client={client}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="tweet/[id]" options={{title:'Tweet'}}/>
+          {/* <Stack.Screen name="tweet/[id]" options={{title:'Tweet'}}/> */}
           <Stack.Screen 
           name ="new-tweet" 
           options={{title:'New Tweet',headerShown:false}}/>
+         
+         <Stack.Screen name ="(auth)/signIn" options={{headerShown:false}}/> 
+         <Stack.Screen name ="(auth)/authenticate" options={{title:"Confirm"}}/>
         </Stack>
       </ThemeProvider>
-    </>
+      </QueryClientProvider>
+      </TweetsApiContexProvider>
+    </AuthContextProvider>
   );
 }

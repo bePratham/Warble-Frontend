@@ -1,32 +1,52 @@
-import { View,StyleSheet,Text,Image, TextInput, Pressable } from "react-native";
+import { View,StyleSheet,Text,Image,TextInput, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useNavigation, useRouter } from "expo-router";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTweetsApi } from "../lib/api/tweets";
+
 
 const user = {
     id: 'u1',
     username: 'VadimNotJustDev',
     name: 'Vadim',
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png',
+    image:'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png',
   }
 
 export default function NewTweet(){
 
     const[text,setText] = useState("");
     const router = useRouter();
+const {createTweet}=useTweetsApi();
+    const queryClient=useQueryClient();
 
-    const onTweetPress = ()=>{
+    const {mutateAsync,isLoading,isError,error }=useMutation({
+        mutationFn: createTweet,
+        onSuccess:(data)=>{
+            //@ts-ignore
+         queryClient.setQueriesData(['tweets'],(existingTweets)=>{
+            //@ts-ignore
+            return[data,...existingTweets];
+        })
+        }
+    });
+    const onTweetPress = async ()=>{
         console.warn("posting that tweet",text);
+       try{
+        await  mutateAsync({content:text});
         setText('');
         router.back();
+       
+       }catch(e){
+        console.log("Error",e);
+       }   
     }
     return(
 <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
       <View style={styles.container}>
         <View style = {styles.buttonContainer}>
           <Link href="../" style={{ fontSize: 18 }}>  Cancel </Link>
-
+            {isLoading && <ActivityIndicator/>}
           <Pressable onPress={onTweetPress} style={styles.button}> 
                 <Text style={styles.buttonText}>
                     Tweet 
@@ -45,6 +65,7 @@ export default function NewTweet(){
             style={{ flex:1 }}
             />
         </View>
+        {isError && <Text>Error: {error.message}</Text>}
      </View>
 </SafeAreaView>
     
